@@ -10,10 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import li.aron.shuffler.methods.Cut;
-import li.aron.shuffler.methods.FisherYates;
 import li.aron.shuffler.methods.Box;
 import li.aron.shuffler.methods.OverhandShuffle;
-import li.aron.shuffler.methods.PerfectRiffleShuffle;
 import li.aron.shuffler.methods.PileShuffle;
 import li.aron.shuffler.methods.RiffleShuffle;
 
@@ -23,10 +21,8 @@ public class Shuffler {
     private final PileShuffle PileShuffle;
     private final OverhandShuffle OverhandShuffle;
     private final RiffleShuffle RiffleShuffle;
-    private final PerfectRiffleShuffle PerfectRiffleShuffle;
     private final Cut Cut;
     private final Box Box;
-    private final FisherYates FisherYates;
     
     public double interquartileRange = Double.NaN;
     public double standardDeviation  = Double.NaN;
@@ -41,10 +37,8 @@ public class Shuffler {
         PileShuffle = new PileShuffle();
         OverhandShuffle = new OverhandShuffle();
         RiffleShuffle = new RiffleShuffle();
-        PerfectRiffleShuffle = new PerfectRiffleShuffle();
         Cut = new Cut();
         Box = new Box();
-        FisherYates = new FisherYates();
         
         decks = new ArrayList<>();
     }
@@ -120,15 +114,6 @@ public class Shuffler {
     }
     
     /**
-     * Shuffles a deck using the Perfect Riffle Shuffle method.
-     * 
-     * @param bottomFirst Should it shuffle from the bottem packet or top first.
-     */
-    public void PerfectRiffleShuffle(boolean bottomFirst) {
-        decks = PerfectRiffleShuffle.shuffleDeck(decks, bottomFirst);
-    }
-    
-    /**
      * Shuffles a deck using the Overhand Shuffle method.
      */
     public void OverhandShuffle() {
@@ -154,13 +139,6 @@ public class Shuffler {
      */
     public void Box() {
         decks = Box.shuffleDeck(decks);
-    }
-    
-    /**
-     * Shuffles a deck using the Fisher Yates method.
-     */
-    public void FisherYates() {
-        decks = FisherYates.shuffleDeck(decks);
     }
     
     /**

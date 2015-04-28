@@ -11,12 +11,10 @@ A java library able to simulate card shuffling as if it was an actual person. Th
 ## Shuffling methods
 A detailed explanation of the shuffling methods is explained in the paper. The shuffling methods currently supported by this program are as follow:
 * Riffle shuffle
-* Perfect Riffle shuffle
 * Overhand shuffle
 * Pile shuffle
 * Cut
 * Box
-* FisherYates
 
 ## Basic Usage
 ```
@@ -44,6 +42,7 @@ System.out.println(shuffler.median);
 
 // Generate results from sequences of methods.
 // This example is the one used in the paper 'Tackling shuffling sequences'.
-Sequences sequences = new Sequences();
-sequences.writeSequencesToFile(4, 100000, "results.csv", 3);
+// Please note that this sample size will run most computers out of ram, for a small test keep it around 100000.
+Sequences sequences = new Sequences(new File("results.csv"), 4, 3);
+sequences.shuffleAndSave(25000000);
 ```
