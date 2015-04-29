@@ -18,14 +18,14 @@ A detailed explanation of the shuffling methods is explained in the paper. The s
 
 ## Basic Usage
 ```
-// Create a new instance with 10.000 sorted decks.
+// Create a new instance with 100.000 sorted decks.
 Shuffler shuffler = new Shuffler();
-shuffler.newDeck(10000);
+shuffler.newDeck(100000);
 
-// Shuffle all 10.000 decks using the riffle shuffle.
+// Shuffle all 100.000 decks using the riffle shuffle.
 shuffler.RiffleShuffle();
 
-// Shuffle the 10.000 decks again, now using the overhand shuffle.
+// Shuffle the 100.000 decks again, now using the overhand shuffle.
 shuffler.OverhandShuffle();
 
 // Gets a heatmap from the previously shuffled decks.
@@ -38,11 +38,11 @@ System.out.println(shuffler.interquartileRange);
 System.out.println(shuffler.standardDeviation);
 System.out.println(shuffler.maxChance);
 System.out.println(shuffler.minChance);
-System.out.println(shuffler.median);
 
 // Generate results from sequences of methods.
 // This example is the one used in the paper 'Tackling shuffling sequences'.
-// Please note that this sample size will run most computers out of ram, for a small test keep it around 100000.
-Sequences sequences = new Sequences(new File("results.csv"), 4, 3);
-sequences.shuffleAndSave(25000000);
+// Please note that a high sample size will run most computers out of ram, for a small test keep it under 100000.
+Sequences sequences = new Sequences(4, 3);
+sequences.shuffleSequences(100000);
+sequences.saveSequencesToFile(new File("output.csv"));
 ```

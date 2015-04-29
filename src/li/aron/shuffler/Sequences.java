@@ -13,8 +13,7 @@ import java.util.Comparator;
 import java.util.Scanner;
 
 public class Sequences {
-    private ArrayList<Sequence> sequences;
-    private final File file;
+    private final ArrayList<Sequence> sequences;
     
     /**
      * Initializes sequences from a previously generated file.
@@ -23,7 +22,6 @@ public class Sequences {
      * @throws java.io.FileNotFoundException
      */
     public Sequences(File file) throws FileNotFoundException {
-        this.file = file;
         this.sequences = new ArrayList<>();
         
         try (Scanner in = new Scanner(new FileReader(file))) {
@@ -45,16 +43,13 @@ public class Sequences {
         }
     }
     
-    
     /**
      * Initializes sequences and file from given parameters.
      * 
-     * @param file      File it should write to.
      * @param methods   Amount of methods in a sequence.
      * @param pile      How expensive is the pile shuffle (a normal method is 1).
      */
-    public Sequences(File file, int methods, int pile) {
-        this.file = file;
+    public Sequences(int methods, int pile) {
         this.sequences = new ArrayList<>();
         
         for (int i = 1; i <= methods; i++) {
@@ -75,12 +70,11 @@ public class Sequences {
     }
     
     /**
-     * Writes the statistics from the sequences to a file given.
+     * Shuffles the sequences as previously initialized.
      * 
      * @param decks     Amount of decks it should shuffle.
-     * @throws java.io.IOException
      */
-    public void shuffleAndSave(int decks) throws IOException {
+    public void shuffleSequences(int decks) {
         for (int i = 0; i < sequences.size(); i++) {
             System.out.println((i + 1) + "/" + sequences.size());
             
@@ -109,7 +103,15 @@ public class Sequences {
             sequence.minChance = ((sequence.sampleSize * sequence.minChance) + (decks * shuffler.minChance)) / ((sequence.sampleSize + decks) * 1.0);
             sequence.sampleSize += decks;
         }
-        
+    }
+    
+    /**
+     * Writes the statistics from the sequences to a file given.
+     * 
+     * @param file      File it should write the statistics to.
+     * @throws java.io.IOException
+     */
+    public void saveSequencesToFile(File file) throws IOException {
         for (int i = 0; i < 4; i++) {
             Collections.sort(sequences, new SequenceComparator(i));
             
@@ -160,7 +162,7 @@ public class Sequences {
         }
         
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
-            out.println("Sequence;Sample Size;# IQR;IQR;# SD;SD;# Max;Max;# Min;Min;# Total");
+            out.println("Sequence;Sample Size;# Interquartile Range;Interquartile Range;# Standard Deviation;Standard Deviation;# Maximum;Maximum;# Minimum;Minimum;# Total");
             
             for (Sequence sequence : sequences) {
                 out.println("'" + sequence.sequence
@@ -229,14 +231,5 @@ class Sequence {
     
     public Sequence(String sequence) {
         this.sequence = sequence;
-    }
-    
-    public Sequence(String sequence, int sampleSize, double interquartileRange, double standardDeviation, double maxChance, double minChance) {
-        this.sequence = sequence;
-        this.sampleSize = sampleSize;
-        this.interquartileRange = interquartileRange;
-        this.standardDeviation = standardDeviation;
-        this.maxChance = maxChance;
-        this.minChance = minChance;
     }
 }
